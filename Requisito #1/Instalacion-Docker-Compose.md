@@ -8,6 +8,9 @@ Para levantar el clúster MongoDB usando el archivo `docker-compose.yml`, se deb
 docker pull mongo:latest
 ```
 
+<p align="center">
+<img src="https://github.com/IAlfaro404/lab2-BDA-MongoDB/blob/main/Requisito%20%231/SalidaTerminalInstalacionDockerCompose2.png?raw=true" alt="Este debe ser el resultado, 1." style="display: block; margin: 0 auto;"/></p>
+
 - Navega hasta el directorio desde el terminal, y donde está archivo `docker-compose.yml`:
 
 -  Levanta los contenedores: Ejecuta lo siguiente para iniciar todos los servicios definidos en el archivo en modo detached (segundo plano):
@@ -17,6 +20,9 @@ docker-compose up -d
 ```
 Una vez que los contenedores estén en ejecución, Se debe proceder con la configuración del Replica Set y la creación de la base de datos en `Instalación-Manual.md` desde el paso #2.
 
+<p align="center">
+<img src="https://github.com/IAlfaro404/lab2-BDA-MongoDB/blob/main/Requisito%20%231/SalidaTerminalInstalacionDockerCompose1.png?raw=true" alt="Este debe ser el resultado, 2." style="display: block; margin: 0 auto;"/></p>
+  
 ---
 
 ## Explicación de `Docker-compose.yml`
