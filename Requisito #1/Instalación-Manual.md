@@ -1,4 +1,3 @@
-# Requisito 1: Configuración del Cluster MongoDB en Docker
 
 ## 1. Crear red personalizada y levantar contenedores con configuración de replicación
 Para una configuración óptima, se va a usar Docker y Docker Compose, por lo que se debe tener instalado en el sistema. 
@@ -47,6 +46,10 @@ Ahora, debes conectarte al contenedor mongo1 e iniciar el Replica Set, añadiend
 ```
 docker exec -it mongo1 mongosh
 ```
+
+<p align="center">
+<img src="https://github.com/IAlfaro404/lab2-BDA-MongoDB/blob/main/Requisito%20%231/SalidaTerminalInstalacionManual1.png?raw=true" alt="Este debe ser el resultado, 1." style="display: block; margin: 0 auto;"/></p>
+
 Dentro de la consola mongosh, inicializa el Replica Set:
 
 ```
@@ -60,6 +63,7 @@ config = {
 }
 ```
 
+
 e inicializar la configuración, luego de esperar máximo 1 minuto.
 ```
 rs.initiate(config)
@@ -67,7 +71,7 @@ rs.status ()
 ```
 
 <details>
-  <summary>Esta es la salida que se debe esperar</summary>
+  <summary>Esta es la salida que se debe esperar (CLICK!)</summary>
 
 ```
 rs [direct: secondary] test> rs.status ()
@@ -199,7 +203,8 @@ En un Replica Set de MongoDB, la redundancia de los datos se activa por defecto 
 ```
 db.createCollection("Discursos");
 ```
-
+<p align="center">
+<img src="https://github.com/IAlfaro404/lab2-BDA-MongoDB/blob/main/Requisito%20%231/SalidaTerminalInstalacionManual2.png?raw=true" alt="Este debe ser el resultado, 1." style="display: block; margin: 0 auto;"/></p>
 
 ## 4. Verificar con rs.status() que los nodos estén correctamente sincronizados
 
