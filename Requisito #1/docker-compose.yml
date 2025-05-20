@@ -1,0 +1,73 @@
+# Versión de Docker Compose
+version: '3.8'
+
+# Definición de los servicios (contenedores)
+services:
+  # Servicio para el primer nodo MongoDB (futuro primario)
+  mongo1:
+    image: mongo:latest # Imagen de MongoDB a utilizar
+    container_name: mongo1 # Nombre del contenedor
+    ports:
+      - "3001:27017" # Mapeo de puertos: host_port:container_port
+    networks:
+      - mongodb-lab2-grupo2 # Conecta este servicio a la red personalizada
+    command: mongod --replSet rs # Inicia mongod con el nombre del Replica Set 'rs'
+    # Espera a que la red esté lista antes de iniciar
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.runCommand({ ping: 1 }).ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - mongo1-data:/data/db # Monta un volumen para persistir los datos
+
+  # Servicio para el segundo nodo MongoDB (secundario)
+  mongo2:
+    image: mongo:latest # Imagen de MongoDB a utilizar
+    container_name: mongo2 # Nombre del contenedor
+    ports:
+      - "3002:27017" # Mapeo de puertos: host_port:container_port
+    networks:
+      - mongodb-lab2-grupo2 # Conecta este servicio a la red personalizada
+    command: mongod --replSet rs # Inicia mongod con el nombre del Replica Set 'rs'
+    depends_on:
+      mongo1:
+        condition: service_healthy # Asegura que mongo1 esté saludable antes de iniciar
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.runCommand({ ping: 1 }).ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - mongo2-data:/data/db # Monta un volumen para persistir los datos
+
+  # Servicio para el tercer nodo MongoDB (secundario)
+  mongo3:
+    image: mongo:latest # Imagen de MongoDB a utilizar
+    container_name: mongo3 # Nombre del contenedor
+    ports:
+      - "3003:27017" # Mapeo de puertos: host_port:container_port
+    networks:
+      - mongodb-lab2-grupo2 # Conecta este servicio a la red personalizada
+    command: mongod --replSet rs # Inicia mongod con el nombre del Replica Set 'rs'
+    depends_on:
+      mongo1:
+        condition: service_healthy # Asegura que mongo1 esté saludable antes de iniciar
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.runCommand({ ping: 1 }).ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - mongo3-data:/data/db # Monta un volumen para persistir los datos
+
+# Definición de las redes personalizadas
+networks:
+  mongodb-lab2-grupo2:
+    driver: bridge # Tipo de red (bridge es el predeterminado para redes personalizadas)
+
+# Definición de los volúmenes para persistir los datos de MongoDB
+volumes:
+  mongo1-data:
+  mongo2-data:
+  mongo3-data:
